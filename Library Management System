@@ -1,0 +1,153 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+struct Books {  //Declaration of the structure.
+  char name_book[90]; //Name of the book
+  char writer[90];  //Author Name
+  int no_of_pages;  //Number of pages
+  float price;  //Prices
+};
+int main()
+{
+  struct Books list[100]; //Declaring structure as list in Main function
+  int choiceUpdate, number;
+  char writer[90],name_book[90];
+  int i, userChoice, count;
+  int min,max;
+  struct Books temp;
+  
+
+  i = userChoice = count = 0;
+  while (userChoice != 11) {
+    printf("\n==========================================\n       Library Management System\n==========================================\n");
+    printf("\nEnter the choice you want to execute:\n1. Add a book\n2. Display all the books\n3. Search a book and its author\n4. Display number of the books in the library.\n5. Search by author \n6. Search books between the prices\n7. Update Details\n8. Arrange in ascending order:\n9. Arrange in descending order:\n10. Exit\nYou Entered: ");
+    scanf("%d", &userChoice);
+    int size = sizeof(list);
+    switch (userChoice) {
+    case 1:   //Taking users' input
+      printf("(Names should not contain spaces)\n\nEnter book name: ");
+      scanf("%s", list[i].name_book);
+      
+
+      printf("Enter writer name: ");
+      scanf("%s", list[i].writer);
+
+      printf("Enter no_of_pages: ");
+      scanf("%d", &list[i].no_of_pages);
+
+      printf("Enter price: ");
+      scanf("%f", &list[i].price);
+      count++;
+      i++;
+      break;
+    case 2: //Displaying data of the books
+      printf("\n=========================================================\nFollowing is the data of the books:\n");
+      for (i = 0; i < count; i++) {
+        printf("Name of the book: %s \n",list[i].name_book);
+        printf("Name of the author: %s \n",list[i].writer);
+        printf("Total number of pages %d\n",list[i].no_of_pages);
+        printf("Total Price: %f \n===============================\n",list[i].price);
+      }
+      break;
+    case 3: //Comparing book name and displaying the match.
+      printf("Enter name of the book: ");
+      scanf("%s", name_book);
+      for (i = 0; i < count; i++) {
+        if (strcmp(name_book, list[i].name_book)  == 0)
+          printf("Book: %s\nAuthor: %s \nPages: %d \n Price: %f \n",list[i].name_book,list[i].writer,list[i].no_of_pages,list[i].price);
+      }
+      break;
+    case 4: //Counting books in the library and displaying it.
+      printf("Total books in the library: %d",count);
+      break;
+    case 5:
+      printf("Enter name of the author: ");
+      scanf("%s", writer);
+      for (i = 0; i < count; i++) {
+        if (strcmp(writer, list[i].writer)  == 0)
+          printf("Book: %s\nAuthor: %s \nPages: %d \n Price: %f \n",list[i].name_book,list[i].writer,list[i].no_of_pages,list[i].price);
+      }
+      break;
+    case 6:
+      printf("Enter the starting price: ");
+      scanf("%d", &min);
+      printf("Enter the max price: ");
+      scanf("%d", &max);
+      for(int i = 0;i<count;i++){
+        if(list[i].price>min && list[i].price<max){
+          printf("\nBook: %s\nAuthor: %s \nPages: %d \nPrice: %f \n=========================================================\n",list[i].name_book,list[i].writer,list[i].no_of_pages,list[i].price);
+        }
+      }
+    case 7:
+      printf("Enter the card sequence you want to update: ");
+      scanf("%d", &number);
+      number = number-1;
+      printf("Enter the data you want to update:\n1. Name of the Book\n2. Name of the author\n3. Number of pages\n4. Price of the book\nYYou Entered: ");
+      scanf("%d",&choiceUpdate);
+      switch(choiceUpdate){ //Switch Case for efficient conditioning
+        case 1:
+          printf("\nEnter the new book name: ");
+          scanf("%s", list[number].name_book);
+          break;
+        case 2:
+          printf("Enter the new author name: ");
+          scanf("%s", list[number].writer);
+          break;
+        case 3:
+          printf("Enter the new no_of_pages: ");
+          scanf("%d", &list[number].no_of_pages);
+          break;
+        case 4:
+          printf("Enter the new price: ");
+          scanf("%f", &list[number].price);
+          break;
+        default:
+          printf("\n\nNo data in the selected sequence.\n\n");
+          break;
+      }
+      break;  
+    case 8:
+      for(int p = 0;p<count;p++){
+        for(int q = 0;q<count;q++){
+          if(list[p].price < list[q].price){
+            temp = list[p];
+            list[p] = list[q];
+            list[q+1] = temp;
+
+          }
+        }
+
+      }
+      for (int b = 0; b < count; b++) {
+        printf("Name of the book: %s \n",list[b].name_book);
+        printf("Name of the author: %s \n",list[b].writer);
+        printf("Total number of pages %d\n",list[b].no_of_pages);
+        printf("Total Price: %f \n===============================\n",list[b].price);
+      }    
+    break;
+    case 9:
+      for(int p = 0;p<count;p++){
+        for(int q = 0;q<count;q++){
+          if(list[p].price > list[q].price){
+            temp = list[p];
+            list[p] = list[q];
+            list[q+1] = temp;
+
+          }
+
+        }
+
+      }
+      for (int a = 0; a < count; a++) {
+        printf("Name of the book: %s \n",list[a].name_book);
+        printf("Name of the author: %s \n",list[a].writer);
+        printf("Total number of pages %d\n",list[a].no_of_pages);
+        printf("Total Price: %f \n===============================\n",list[a].price);
+      }
+      break;
+    case 10:
+      exit(0);  
+    }
+  }
+  return 0;
+}
